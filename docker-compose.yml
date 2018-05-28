@@ -1,0 +1,20 @@
+version: "2"
+services:
+
+  mailserver:
+    build:
+      context: ./mail
+
+  application:
+    build:
+      context: ./app
+    restart: on-failure
+    depends_on:
+      - mailserver
+
+  reader:
+    build:
+      context: ./client
+    restart: on-failure
+    depends_on:
+      - mailserver
