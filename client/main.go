@@ -16,9 +16,8 @@ func main(){
 
 func ReadMail(){
 		log.Println("Connecting to server...")
-
 		// Connect to server
-		c, err := client.DialTLS("mail.example.org:993", nil)
+		c, err := client.Dial("mailserver:143")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -28,7 +27,7 @@ func ReadMail(){
 		defer c.Logout()
 
 		// Login
-		if err := c.Login("username", "password"); err != nil {
+		if err := c.Login("johnmcdnl", "password"); err != nil {
 			log.Fatal(err)
 		}
 		log.Println("Logged in")

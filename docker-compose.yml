@@ -4,6 +4,13 @@ services:
   mailserver:
     build:
       context: ./mail
+    ports:
+      - "143:143"
+      - "110:110"
+    environment:
+      - HOSTNAME=${HOSTNAME:-mailserver}
+      - USERNAME=${HOSTNAME:-johnmcdnl}
+      - PASSWORD=${HOSTNAME:-password}
 
   application:
     build:
@@ -11,6 +18,11 @@ services:
     restart: on-failure
     depends_on:
       - mailserver
+    environment:
+      - HOSTNAME=${HOSTNAME:-mailserver}
+      - PORT=${HOSTNAME:-25}
+      - USERNAME=${HOSTNAME:-johnmcdnl}
+      - PASSWORD=${HOSTNAME:-password}
 
   reader:
     build:
@@ -18,3 +30,8 @@ services:
     restart: on-failure
     depends_on:
       - mailserver
+    environment:
+      - HOSTNAME=${HOSTNAME:-mailserver}
+      - PORT=${HOSTNAME:-143}
+      - USERNAME=${HOSTNAME:-johnmcdnl}
+      - PASSWORD=${HOSTNAME:-password}
